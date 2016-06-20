@@ -11,5 +11,5 @@ preferences in students.csv.
 4. The second preference student accepts the proposal if:
   * they haven't received an offer or
   * the proposed offer is a higher preference university for them than their current offer
-5. loop to 5 if there are universities that are unmatched
+5. loop to 3 if there are universities that are unmatched
 
