@@ -29,6 +29,13 @@ public:
         elemBuff.push_back(*itr);
       }
     }
+    if (elemBuff.length() > 0) {
+      if (name.length() == 0) {
+        name = elemBuff;
+      } else {
+        preferences.push_back(elemBuff);
+      }
+    }
     return OpinionatedEntity(name, preferences);
   }
 
