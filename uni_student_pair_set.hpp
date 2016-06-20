@@ -25,7 +25,7 @@ public:
     std::vector<OpinionatedEntity> us,
     std::vector<OpinionatedEntity> ss
   ) {
-    PairUp pairer = PairUp(ss, us);
+    PairUp pairer = PairUp(us, ss);
     return pairer.pairUp();
   }
 
@@ -34,6 +34,12 @@ public:
 private:
   void proposePair(UniStudentPair pair);
   std::vector<OpinionatedEntity> getUnpairedUniversities();
+
+  bool universityHasPair(const std::string uniName);
+  bool studentHasPair(const std::string uniName);
+  const UniStudentPair getStudentPair(const std::string uniName);
+
+  const OpinionatedEntity getStudentByName(const std::string studentName);
 
   const std::vector<OpinionatedEntity> universities;
   const std::vector<OpinionatedEntity> students;

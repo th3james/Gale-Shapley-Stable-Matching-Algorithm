@@ -2,22 +2,12 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <experimental/optional>
 
 #include "opinionated_entity.hpp"
 #include "uni_student_pair_set.hpp"
 
 typedef std::string::const_iterator strItr_t;
 typedef std::vector<std::string>::const_iterator strVecItr_t;
-
-std::experimental::optional<OpinionatedEntity> findEntityByName(const std::vector<OpinionatedEntity> &entities, const std::string &name) {
-  for(opEdItr_t itr = entities.begin(); itr != entities.end(); itr++) {
-    if (itr->name() == name) {
-      return std::experimental::optional<OpinionatedEntity>(*itr);
-    }
-  }
-  return std::experimental::optional<OpinionatedEntity>();
-}
 
 int main() {
   std::ifstream studentFile;
