@@ -4,14 +4,16 @@
 
 const std::vector<UniStudentPair> PairUp::pairUp() {
   std::vector<OpinionatedEntity> unpairedUniversities = universities;
+  uint8_t round = 0;
   while(unpairedUniversities.size() > 0) {
     for(size_t i = 0; i < unpairedUniversities.size(); i++) {
       OpinionatedEntity university = unpairedUniversities[i];
       proposePair(
-        UniStudentPair(university.name(), university.preferences()[0])
+        UniStudentPair(university.name(), university.preferences()[round])
       );
     }
     unpairedUniversities = getUnpairedUniversities();
+    round++;
   }
   return pairs;
 };
@@ -20,7 +22,9 @@ void PairUp::proposePair(UniStudentPair pair) {
   if (studentHasPair(pair.studentName)) {
     UniStudentPair existingPair = getStudentPair(pair.studentName);
     OpinionatedEntity student = getStudentByName(pair.studentName);
-    pairs.push_back(pair);
+    if (student.indexOfPreference(pair.studentName) < student.indexOfPreference(existingPair.studentName)) {
+      pairs.push_back(pair);
+    }
   } else {
     pairs.push_back(pair);
   }

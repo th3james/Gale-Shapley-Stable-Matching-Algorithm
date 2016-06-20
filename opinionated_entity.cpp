@@ -34,3 +34,12 @@ const std::string OpinionatedEntity::toString() const {
   }
   return str;
 }
+
+const size_t OpinionatedEntity::indexOfPreference(const std::string prefName) const {
+  for(size_t i = 0; i < prefs.size(); i++) {
+    if (prefs[i] == prefName) {
+      return i;
+    }
+  }
+  return 9001;
+}

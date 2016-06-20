@@ -20,6 +20,8 @@ public:
   const std::string name() const { return n; }
   const std::vector<std::string> preferences() const { return prefs; }
 
+  const size_t indexOfPreference(const std::string prefName) const;
+
 private:
   const std::string n;
   const std::vector<std::string> prefs;
