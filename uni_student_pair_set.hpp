@@ -33,6 +33,7 @@ public:
 
 private:
   void proposePair(UniStudentPair pair);
+  std::vector<OpinionatedEntity> getUnpairedUniversities();
 
   const std::vector<OpinionatedEntity> universities;
   const std::vector<OpinionatedEntity> students;

@@ -10,10 +10,15 @@ const std::vector<UniStudentPair> PairUp::pairUp() {
         UniStudentPair(university.name(), university.preferences()[0])
       );
     }
-    unpairedUniversities = std::vector<OpinionatedEntity>();
+    unpairedUniversities = getUnpairedUniversities();
   }
   return pairs;
 };
 
 void PairUp::proposePair(UniStudentPair pair) {
+  pairs.push_back(pair);
+};
+
+std::vector<OpinionatedEntity> PairUp::getUnpairedUniversities() {
+  return std::vector<OpinionatedEntity>();
 };

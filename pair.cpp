@@ -48,7 +48,7 @@ int main() {
   );
 
   for(uint8_t i = 0; i < pairings.size(); i++) {
-    UniStudentPair pair = pairings[0];
+    UniStudentPair pair = pairings[i];
 
     std::cout << pair.universityName << ", " << pair.studentName << std::endl;
   }
