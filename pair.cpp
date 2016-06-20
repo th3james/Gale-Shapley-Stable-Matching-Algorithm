@@ -68,8 +68,21 @@ int main() {
       OpinionatedEntity::buildFromCsvRow(line)
     );
   }
-
   for(opEdItr_t itr = students.begin(); itr != students.end(); itr++) {
+    std::cout << itr->toString() << std::endl;
+  }
+  studentFile.close();
+
+  std::ifstream universityFile;
+  universityFile.open("universities.csv");
+  std::vector<OpinionatedEntity> universities;
+
+  for(universityFile >> line; !universityFile.eof(); universityFile >> line) {
+    universities.push_back(
+      OpinionatedEntity::buildFromCsvRow(line)
+    );
+  }
+  for(opEdItr_t itr = universities.begin(); itr != universities.end(); itr++) {
     std::cout << itr->toString() << std::endl;
   }
 
