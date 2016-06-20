@@ -3,29 +3,21 @@
 #include <string>
 #include <vector>
 
+typedef std::string::const_iterator strItr_t;
+typedef std::vector<std::string>::const_iterator strVecItr_t;
+
 class OpinionatedEntity {
 public:
   OpinionatedEntity(std::string name, std::vector<std::string> preferences) :
     n(name),
     prefs(preferences) {};
-private:
-  const std::string n;
-  const std::vector<std::string> prefs;
-};
 
-typedef std::string::const_iterator strItr_t;
-
-int main() {
-  std::ifstream studentFile;
-  studentFile.open("students.csv");
-  std::vector<OpinionatedEntity> students;
-
-  std::string line;
-  for(studentFile >> line; !studentFile.eof(); studentFile >> line) {
+  static OpinionatedEntity buildFromCsvRow(std::string csvRow) {
     std::string elemBuff;
     std::string name;
     std::vector<std::string> preferences;
-    for(strItr_t itr = line.begin(); itr != line.end(); itr++) {
+
+    for(strItr_t itr = csvRow.begin(); itr != csvRow.end(); itr++) {
       if (*itr == ',') {
         if (name.length() == 0) {
           name = elemBuff;
@@ -36,9 +28,42 @@ int main() {
       } else {
         elemBuff.push_back(*itr);
       }
-
-      students.push_back(OpinionatedEntity(name, preferences));
     }
+    return OpinionatedEntity(name, preferences);
+  }
+
+  const std::string toString() const {
+    std::string str(n + ": ");
+    for(strVecItr_t prefItr = prefs.begin(); prefItr != prefs.end(); prefItr++) {
+      str += (*prefItr) + ", ";
+    }
+    return str;
+  }
+
+  const std::string name() const { return n; }
+  const std::vector<std::string> preferences() const { return prefs; }
+
+private:
+  const std::string n;
+  const std::vector<std::string> prefs;
+};
+
+typedef std::vector<OpinionatedEntity>::const_iterator opEdItr_t;
+
+int main() {
+  std::ifstream studentFile;
+  studentFile.open("students.csv");
+  std::vector<OpinionatedEntity> students;
+
+  std::string line;
+  for(studentFile >> line; !studentFile.eof(); studentFile >> line) {
+    students.push_back(
+      OpinionatedEntity::buildFromCsvRow(line)
+    );
+  }
+
+  for(opEdItr_t itr = students.begin(); itr != students.end(); itr++) {
+    std::cout << itr->toString() << std::endl;
   }
 
   return 0;
