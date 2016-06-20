@@ -2,60 +2,22 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <experimental/optional>
+
+#include "opinionated_entity.hpp"
+#include "uni_student_pair_set.hpp"
 
 typedef std::string::const_iterator strItr_t;
 typedef std::vector<std::string>::const_iterator strVecItr_t;
 
-class OpinionatedEntity {
-public:
-  OpinionatedEntity(std::string name, std::vector<std::string> preferences) :
-    n(name),
-    prefs(preferences) {};
-
-  static OpinionatedEntity buildFromCsvRow(std::string csvRow) {
-    std::string elemBuff;
-    std::string name;
-    std::vector<std::string> preferences;
-
-    for(strItr_t itr = csvRow.begin(); itr != csvRow.end(); itr++) {
-      if (*itr == ',') {
-        if (name.length() == 0) {
-          name = elemBuff;
-        } else {
-          preferences.push_back(elemBuff);
-        }
-        elemBuff = "";
-      } else {
-        elemBuff.push_back(*itr);
-      }
+std::experimental::optional<OpinionatedEntity> findEntityByName(const std::vector<OpinionatedEntity> &entities, const std::string &name) {
+  for(opEdItr_t itr = entities.begin(); itr != entities.end(); itr++) {
+    if (itr->name() == name) {
+      return std::experimental::optional<OpinionatedEntity>(*itr);
     }
-    if (elemBuff.length() > 0) {
-      if (name.length() == 0) {
-        name = elemBuff;
-      } else {
-        preferences.push_back(elemBuff);
-      }
-    }
-    return OpinionatedEntity(name, preferences);
   }
-
-  const std::string toString() const {
-    std::string str(n + ": ");
-    for(strVecItr_t prefItr = prefs.begin(); prefItr != prefs.end(); prefItr++) {
-      str += (*prefItr) + ", ";
-    }
-    return str;
-  }
-
-  const std::string name() const { return n; }
-  const std::vector<std::string> preferences() const { return prefs; }
-
-private:
-  const std::string n;
-  const std::vector<std::string> prefs;
-};
-
-typedef std::vector<OpinionatedEntity>::const_iterator opEdItr_t;
+  return std::experimental::optional<OpinionatedEntity>();
+}
 
 int main() {
   std::ifstream studentFile;
@@ -68,9 +30,6 @@ int main() {
       OpinionatedEntity::buildFromCsvRow(line)
     );
   }
-  for(opEdItr_t itr = students.begin(); itr != students.end(); itr++) {
-    std::cout << itr->toString() << std::endl;
-  }
   studentFile.close();
 
   std::ifstream universityFile;
@@ -82,8 +41,16 @@ int main() {
       OpinionatedEntity::buildFromCsvRow(line)
     );
   }
-  for(opEdItr_t itr = universities.begin(); itr != universities.end(); itr++) {
-    std::cout << itr->toString() << std::endl;
+  universityFile.close();
+
+  std::vector<UniStudentPair> pairings = PairUp::pairUp(
+    universities, students
+  );
+
+  for(uint8_t i = 0; i < pairings.size(); i++) {
+    UniStudentPair pair = pairings[0];
+
+    std::cout << pair.universityName << ", " << pair.studentName << std::endl;
   }
 
   return 0;
