@@ -19,10 +19,13 @@ const std::vector<UniStudentPair> PairUp::pairUp() {
 };
 
 void PairUp::proposePair(UniStudentPair pair) {
-  if (studentHasPair(pair.studentName)) {
+  int32_t indexOfExistingPair = indexOfStudentPair(pair.studentName);
+  if (indexOfExistingPair != -1) {
     UniStudentPair existingPair = getStudentPair(pair.studentName);
     OpinionatedEntity student = getStudentByName(pair.studentName);
-    if (student.indexOfPreference(pair.studentName) < student.indexOfPreference(existingPair.studentName)) {
+
+    if (student.indexOfPreference(pair.universityName) < student.indexOfPreference(existingPair.universityName)) {
+      pairs.erase(pairs.begin() + indexOfExistingPair);
       pairs.push_back(pair);
     }
   } else {
@@ -53,14 +56,14 @@ bool PairUp::universityHasPair(const std::string uniName) {
   return false;
 }
 
-bool PairUp::studentHasPair(const std::string studentName) {
+int32_t PairUp::indexOfStudentPair(const std::string studentName) {
   for(size_t i = 0; i < pairs.size(); i++) {
     UniStudentPair pair = pairs[i];
     if (pair.studentName == studentName) {
-      return true;
+      return i;
     }
   }
-  return false;
+  return -1;
 }
 
 const UniStudentPair PairUp::getStudentPair(const std::string studentName) {
