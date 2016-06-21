@@ -1,7 +1,7 @@
 # Gale Shapley Stable Matching Algorithm
-In this challenge you are tasked with matching the universities with their
-preferences in preferences.csv with the potential students with their
-preferences in students.csv.
+In this challenge you are tasked with matching the universities in
+universities.csv with the potential students in students.csv based on the
+preferences included in those files.
 
 ## Steps
 
