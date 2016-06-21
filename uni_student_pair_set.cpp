@@ -19,16 +19,24 @@ const std::vector<UniStudentPair> PairUp::pairUp() {
 };
 
 void PairUp::proposePair(UniStudentPair pair) {
+  std::cout << "\n"  << std::endl;
+  std::cout << "### proposing pairing pairing between " << pair.studentName << " " << pair.universityName << std::endl;
   int32_t indexOfExistingPair = indexOfStudentPair(pair.studentName);
   if (indexOfExistingPair != -1) {
     UniStudentPair existingPair = getStudentPair(pair.studentName);
+    std::cout << "existing pairing between " << existingPair.studentName << " " << existingPair.universityName << std::endl;
     OpinionatedEntity student = getStudentByName(pair.studentName);
 
     if (student.indexOfPreference(pair.universityName) < student.indexOfPreference(existingPair.universityName)) {
+      std::cout << "removing pairing between " << existingPair.studentName << " " << existingPair.universityName << std::endl;
       pairs.erase(pairs.begin() + indexOfExistingPair);
+      std::cout << "inserting pairing between " << pair.studentName << " " << pair.universityName << std::endl;
       pairs.push_back(pair);
+    } else {
+      std::cout << "^ pairing is better than " << pair.studentName << " " << pair.universityName << std::endl;
     }
   } else {
+    std::cout << "inserting pairing between " << pair.studentName << " " << pair.universityName << std::endl;
     pairs.push_back(pair);
   }
 };
