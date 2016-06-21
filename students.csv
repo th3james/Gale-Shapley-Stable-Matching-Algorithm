@@ -1,4 +1,4 @@
-Charlie,Cambridge,Oxford,Ucl,Imperial
-Dee,Oxford,Cambridge,Imperial,Ucl
-Mac,Cambridge,Ucl,Imperial,Oxford
-Dennis,Oxford,Imperial,Cambridge,Ucl
+Oxford,Dee,Mac,Dennis,Charlie
+Cambridge,Mac,Charlie,Dennis,Dee
+Ucl,Dennis,Mac,Charlie,Dee
+Imperial,Charlie,Dennis,Dee,Mac
