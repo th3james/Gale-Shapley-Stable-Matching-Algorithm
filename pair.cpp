@@ -37,10 +37,11 @@ int main() {
     universities, students
   );
 
+  std::cout << "\n### Results ###" << std::endl;
   for(uint8_t i = 0; i < pairings.size(); i++) {
     UniStudentPair pair = pairings[i];
 
-    std::cout << pair.universityName << ", " << pair.studentName << std::endl;
+    std::cout << pair.universityName << " + " << pair.studentName << std::endl;
   }
 
   return 0;
