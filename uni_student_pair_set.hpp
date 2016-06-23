@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include "opinionated_entity.hpp"
 
@@ -44,6 +45,7 @@ private:
   const std::vector<OpinionatedEntity> universities;
   const std::vector<OpinionatedEntity> students;
   std::vector<UniStudentPair> pairs;
+  std::map<std::string, size_t> uniNextPreference;
 };
 
 #endif
